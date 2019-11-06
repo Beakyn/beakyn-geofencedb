@@ -42,8 +42,8 @@ const mapLayers = {
     label: 'Census Tract',
   },
   'census-block-group': {
-    url: 'mapbox://shfishburn.0wqmnz4z',
-    sourceLayer: 'BKN_GEOFENCE_BLOCK_GROUP_V2-bmzxoy',
+    url: 'mapbox://shfishburn.62up6gjq',
+    sourceLayer: 'BKN_GEOFENCE_BLOCK_GROUP_V2-5hzeh7',
     zoom: 6,
     label: 'Census Block Group',
   },
@@ -94,7 +94,12 @@ map.on('load', () => {
   selectElm.addEventListener('change', function() {
     loadLayer(this.value);
   });
-})
+});
+
+const clearMapInfo = () => {
+  this.popup.remove();
+  this.map.getCanvas().style.cursor = '';
+};
 
 const loadLayer = (layerName) => {
   // Extract properties from `mapLayers`.
@@ -129,10 +134,23 @@ const addPopupMouseEvents = (layerName) => {
   map.on('mouseenter', layerName, function(e) {
     // Change the cursor style as a UI indicator.
     map.getCanvas().style.cursor = 'pointer';
+  });
 
-    var coordinates = e.features[0].geometry.coordinates.slice();
-    var description = e.features[0].properties.geoId;
+  map.on('click', layerName, function(e) {
+    const currentLayer = activeLayer;
 
+    const features = map
+      .queryRenderedFeatures(e.point)
+      .filter((f) => f.layer.id === currentLayer);
+
+    const feature = features[0];
+
+    if (!feature || !features.length) {
+      this.clearMapInfo();
+      return;
+    }
+
+    const coordinates = e.features[0].geometry.coordinates.slice();
     const title = e.features[0].properties.id;
     const properties = e.features[0].properties;
 
@@ -140,7 +158,7 @@ const addPopupMouseEvents = (layerName) => {
     // copies of the feature are visible, the popup appears
     // over the copy being pointed to.
     while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-    coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+      coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
     }
 
     // Populate the popup and set its coordinates
@@ -167,14 +185,16 @@ const popupTemplate = (title, properties) => `
   </div>
 `;
 
+
 const propertyTemplate = (name, value) => {
-  console.log(typeof value, value);
+  const normalizedName = name.replace(/_/g, ' ');
+  const normalizedValue = String(value).replace(/"/g, '').replace(/\[/g, '').replace(/\]/g, '').replace(/\,/g, ', ');
 
   return value
     ? `
     <div>
-      <strong>${name}:</strong>
-      <span>${Array.isArray(value) ? value.split(',') : value}</span>
+      <strong>${normalizedName}:</strong>
+      <span>${normalizedValue}</span>
     </div>`
     : '';
 }
