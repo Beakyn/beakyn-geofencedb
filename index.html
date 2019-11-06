@@ -26,7 +26,6 @@
 
   <title>Cross-walked Geofence DB</title>
   <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&amp;display=swap" rel=stylesheet>
-  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.js'></script>
   <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.css' rel='stylesheet' />
   <link rel="stylesheet" href="style.css">
 </head>
@@ -101,12 +100,26 @@
         <a href="changelog.html" title="Support">Changelog</a>
       </section>
     </content>
+
+    <div class="btn-floating btn-close-menu">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+        <path d="M0 0h24v24H0z" fill="none"/>
+      </svg>
+    </div>
   </main>
 
   <a id="cta">
     <h3>Buy data package now!</h3>
     <p>One payment of $199</p>
   </a>
+
+  <div class="btn-floating btn-open-menu">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+      <path fill="none" d="M0 0h24v24H0V0z"/>
+      <path d="M3 18h13v-2H3v2zm0-5h10v-2H3v2zm0-7v2h13V6H3zm18 9.59L17.42 12 21 8.41 19.59 7l-5 5 5 5L21 15.59z"/>
+    </svg>
+  </div>
 
   <div id="layer-nav">
     <h4>Geofence Type</h4>
@@ -117,13 +130,13 @@
       <option value="census-tract">Census Tract</option>
       <option value="csa">CSA</option>
       <option value="cbsa">CBSA</option>
-      <option value="zip-code" selected>Zip Code</option>
       <option value="place">Places</option>
+      <option value="zip-code" selected>Zip Code</option>
       <option value="census-block-group">Census Block Group</option>
-      <option value="census-block-group-v2">Census Block Group V2</option>
     </select>
   </div>
 
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.js'></script>
   <script src="script.js"></script>
 </body>
 </html>

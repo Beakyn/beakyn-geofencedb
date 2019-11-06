@@ -42,16 +42,10 @@ const mapLayers = {
     label: 'Census Tract',
   },
   'census-block-group': {
-    url: 'mapbox://shfishburn.bkn-geofence-block-group',
-    sourceLayer: 'BKN_GEOFENCE_BLOCK_GROUP',
-    zoom: 5,
-    label: 'Block Group',
-  },
-  'census-block-group-v2': {
     url: 'mapbox://shfishburn.0wqmnz4z',
     sourceLayer: 'BKN_GEOFENCE_BLOCK_GROUP_V2-bmzxoy',
     zoom: 6,
-    label: 'Block Group V2',
+    label: 'Census Block Group',
   },
 };
 
@@ -60,6 +54,17 @@ let activeLayer;
 // Cache select element.
 const selectElm = document.querySelector('.select-css');
 
+// Cache #main element.
+const mainElm = document.querySelector('#main');
+
+// Cache menu buttons.
+const openMenuBtnElm = document.querySelector('.btn-open-menu');
+const closeMenuBtnElm = document.querySelector('.btn-close-menu');
+
+openMenuBtnElm.addEventListener('click', () => mainElm.classList.add('active'));
+closeMenuBtnElm.addEventListener('click', () => mainElm.classList.remove('active'));
+
+// Initialize Mapbox instance.
 mapboxgl.accessToken = 'pk.eyJ1Ijoic2hmaXNoYnVybiIsImEiOiJjazJsd201ZDMwYXZlM2RwMDRpeHFvOXB6In0.2XBQLAbYp4pu3Gs7DbD1jg';
 
 const map = new mapboxgl.Map({
@@ -91,7 +96,7 @@ map.on('load', () => {
   });
 })
 
-function loadLayer(layerName) {
+const loadLayer = (layerName) => {
   // Extract properties from `mapLayers`.
   const {url, zoom, sourceLayer} = mapLayers[layerName];
 
@@ -120,7 +125,7 @@ function loadLayer(layerName) {
   activeLayer = layerName;
 }
 
-function addPopupMouseEvents(layerName) {
+const addPopupMouseEvents = (layerName) => {
   map.on('mouseenter', layerName, function(e) {
     // Change the cursor style as a UI indicator.
     map.getCanvas().style.cursor = 'pointer';

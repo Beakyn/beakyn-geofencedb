@@ -115,12 +115,12 @@ li {
 
 #layer-nav {
   position: fixed;
-  top: 30px;
-  left: 30px;
+  top: 20px;
+  left: 20px;
   background-color: rgba(255,255,255,0.6);
   webkit-backdrop-filter: saturate(120%) blur(20px);
   backdrop-filter: saturate(120%) blur(20px);
-  z-index: 10;
+  z-index: 5;
   width: 200px;
   border-radius: 10px;
   display: flex;
@@ -144,8 +144,9 @@ li {
   background-color: rgba(255,255,255,0.6);
   webkit-backdrop-filter: saturate(120%) blur(20px);
   backdrop-filter: saturate(120%) blur(20px);
-  z-index: 10;
+  z-index: 20;
   padding-bottom: 100px;
+  transition: all 0.2s ease-in-out;
 }
 
 #page {
@@ -162,6 +163,11 @@ li {
 @media (min-width: 320px) and (max-width: 480px) {
   #main {
     width: 100%;
+    transform: translateX(100%);
+  }
+
+  #main.active {
+    transform: translateX(0);
   }
 }
 
@@ -185,7 +191,7 @@ li {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  z-index: 20;
+  z-index: 30;
   cursor: pointer;
   transition: all 0.3s;
 }
@@ -263,6 +269,44 @@ li {
 .btn:hover {
   border-color: rgba(30,14,98,0.5);
   text-decoration: none;
+}
+
+.btn-floating {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #EE524B;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+}
+
+.btn-floating svg {
+  fill: #FFF;
+}
+
+.btn-floating.btn-close-menu {
+  border: 1px solid #EE524B;
+  background-color: #FFF;
+}
+
+.btn-floating.btn-close-menu svg {
+  fill: #EE524B;
+}
+
+.btn-floating.btn-close-menu,
+.btn-floating.btn-open-menu {
+  display: none;
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+  .btn-floating.btn-close-menu,
+  .btn-floating.btn-open-menu {
+    display: flex;
+  }
 }
 
 .section-support-links {
