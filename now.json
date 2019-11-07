@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "name": "beakyn-cross-walked-geofence-db",
+  "name": "beakyn-geofencedb",
   "alias": "geofencedb.beakyn.com",
   "scope": "beakyn"
 }
