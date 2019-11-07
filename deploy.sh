@@ -1,2 +1,2 @@
 #!/bin/bash
-now && now alias
+now --target prod
