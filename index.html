@@ -24,6 +24,7 @@
   <meta name=msapplication-TileImage content=https://beakyn.com/assets/ms-icon-144x144.png />
   <meta name=theme-color content=#ffffff>
   <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
+  <meta name="description" content="A package of data sets containing polygon geometry for political geofences in the United States." />
 
   <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&amp;display=swap" rel=stylesheet />
   <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.css' rel='stylesheet' />
@@ -36,7 +37,7 @@
 
   <main id="main">
     <content id="content">
-      <a href="https://beakyn.com" title="Beakyn.com" target="_blank">
+      <a href="https://beakyn.com" title="Beakyn.com" target="_blank" rel="noopener">
         <img src="https://beakyn.com/assets/beakyn-logo-v2-color.png" height="auto" width="100" title="Beakyn Co." id="brand-img">
       </a>
 
@@ -98,8 +99,8 @@
 
       <section class="section-support-links">
         <!-- TODO: <a href="terms-of-use.html" title="Terms of Use">Terms of Use</a> -->
-        <a href="https://beakyn.freshdesk.com/support/solutions/47000339669" target="_blank" title="Help & Support">Help</a>
-        <a href="https://beakyn.freshdesk.com/support/solutions/articles/47000731921-changelog" target="_blank" title="Changelog">Changelog</a>
+        <a href="https://beakyn.freshdesk.com/support/solutions/47000339669" target="_blank" title="Help & Support" rel="noopener">Help</a>
+        <a href="https://beakyn.freshdesk.com/support/solutions/articles/47000731921-changelog" target="_blank" title="Changelog" rel="noopener">Changelog</a>
       </section>
     </content>
 
@@ -126,7 +127,7 @@
   <div id="layer-nav">
     <h4>Geofence Type</h4>
 
-    <select class="select-css">
+    <select class="select-css" name="layer-select">
       <option value="state">State</option>
       <option value="county">County</option>
       <option value="census-tract">Census Tract</option>
