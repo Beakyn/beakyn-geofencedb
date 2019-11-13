@@ -124,6 +124,18 @@ const loadLayer = (layerName) => {
     },
   });
 
+  map.addLayer({
+    id: `${layerName}-highlighted`,
+    type: 'fill',
+    source: layerName,
+    'source-layer': sourceLayer,
+    paint: {
+      'fill-outline-color': 'rgba(30,14,98,0.5)',
+      'fill-color': 'rgba(128,7,212,0.5)',
+    },
+    'filter': ['in', 'name', '']
+  });
+
   addPopupMouseEvents(layerName);
 
   // Set active layer to current.
@@ -145,6 +157,8 @@ const addPopupMouseEvents = (layerName) => {
 
     const feature = features[0];
 
+    console.log(feature);
+
     if (!feature || !features.length) {
       this.clearMapInfo();
       return;
@@ -161,6 +175,13 @@ const addPopupMouseEvents = (layerName) => {
       coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
     }
 
+    const filter = features.reduce((memo, feature) => {
+      memo.push(feature.properties.name);
+      return memo;
+    }, ['in', 'name']);
+
+    map.setFilter(`${layerName}-highlighted`, filter);
+
     // Populate the popup and set its coordinates
     // based on the feature found.
     popup.setLngLat(e.lngLat)
@@ -171,6 +192,7 @@ const addPopupMouseEvents = (layerName) => {
   map.on('mouseleave', layerName, function() {
     map.getCanvas().style.cursor = '';
     popup.remove();
+    map.setFilter(`${layerName}-highlighted`, ['in', 'name', '']);
   });
 }
 
