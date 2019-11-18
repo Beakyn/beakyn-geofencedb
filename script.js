@@ -64,9 +64,12 @@ const closeMenuBtnElm = document.querySelector('.btn-close-menu');
 openMenuBtnElm.addEventListener('click', () => mainElm.classList.add('active'));
 closeMenuBtnElm.addEventListener('click', () => mainElm.classList.remove('active'));
 
-// Initialize Mapbox instance.
+/**
+ * Don't forget to use your own Mapbox key, this one it's not going to work.
+ */
 mapboxgl.accessToken = 'pk.eyJ1Ijoic2hmaXNoYnVybiIsImEiOiJjazJsd201ZDMwYXZlM2RwMDRpeHFvOXB6In0.2XBQLAbYp4pu3Gs7DbD1jg';
 
+// Initialize Mapbox instance.
 const map = new mapboxgl.Map({
   container: 'map',
   zoom: 4,
