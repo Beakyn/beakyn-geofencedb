@@ -113,6 +113,22 @@ li {
   margin: 5px;
 }
 
+table {
+  width: 100%;
+}
+
+table td {
+  border: solid 1px #ccc;
+  padding: 8px 15px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+table td:first-child {
+  font-weight: 600;
+  text-align: right;
+}
+
 #layer-nav {
   position: fixed;
   top: 20px;
@@ -141,7 +157,7 @@ li {
   right: 0;
   top: 0;
   bottom: 0;
-  background-color: rgba(255,255,255,0.6);
+  background-color: rgba(255,255,255,0.8);
   webkit-backdrop-filter: saturate(120%) blur(20px);
   backdrop-filter: saturate(120%) blur(20px);
   z-index: 20;
@@ -366,3 +382,25 @@ li {
 .select-css option {
   font-weight:normal;
 }
+
+.feature-detail-header {
+  display: flex;
+  align-items: start;
+  margin-top: 20px;
+}
+
+.feature-detail-header h1.title {
+  margin-top: 0;
+  flex: 1;
+}
+
+a.back-btn svg {
+  color: rgba(30,14,98,100);
+}
+
+.feature-detail-header a.back-btn {
+  display: block;
+  margin-right: 20px;
+  margin-top: 5px;
+}
+
