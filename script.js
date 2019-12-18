@@ -1,80 +1,83 @@
 const mapLayers = {
   state: {
-    url: 'mapbox://shfishburn.bkn-geofence-state',
-    sourceLayer: 'BKN_GEOFENCE_STATE',
+    url: "mapbox://shfishburn.bkn-geofence-state",
+    sourceLayer: "BKN_GEOFENCE_STATE",
     zoom: 3,
-    label: 'State',
+    label: "State"
   },
   county: {
-    url: 'mapbox://shfishburn.bkn-geofence-county',
-    sourceLayer: 'BKN_GEOFENCE_COUNTY',
+    url: "mapbox://shfishburn.bkn-geofence-county",
+    sourceLayer: "BKN_GEOFENCE_COUNTY",
     zoom: 4,
-    label: 'County',
+    label: "County"
   },
-  'zip-code': {
-    url: 'mapbox://shfishburn.bkn-geofence-zip',
-    sourceLayer: 'BKN_GEOFENCE_ZIP',
+  "zip-code": {
+    url: "mapbox://shfishburn.bkn-geofence-zip",
+    sourceLayer: "BKN_GEOFENCE_ZIP",
     zoom: 4,
-    label: 'Zip Code',
+    label: "Zip Code"
   },
   place: {
-    url: 'mapbox://shfishburn.bkn-geofence-place',
-    sourceLayer: 'BKN_GEOFENCE_PLACE',
+    url: "mapbox://shfishburn.bkn-geofence-place",
+    sourceLayer: "BKN_GEOFENCE_PLACE",
     zoom: 4,
-    label: 'Place',
+    label: "Place"
   },
   csa: {
-    url: 'mapbox://shfishburn.bkn-geofence-csa',
-    sourceLayer: 'BKN_GEOFENCE_CSA',
+    url: "mapbox://shfishburn.bkn-geofence-csa",
+    sourceLayer: "BKN_GEOFENCE_CSA",
     zoom: 5,
-    label: 'CSA',
+    label: "CSA"
   },
   cbsa: {
-    url: 'mapbox://shfishburn.bkn-geofence-cbsa',
-    sourceLayer: 'BKN_GEOFENCE_CBSA',
+    url: "mapbox://shfishburn.bkn-geofence-cbsa",
+    sourceLayer: "BKN_GEOFENCE_CBSA",
     zoom: 5,
-    label: 'CBSA',
+    label: "CBSA"
   },
-  'census-tract': {
-    url: 'mapbox://shfishburn.bkn-geofence-census-tract',
-    sourceLayer: 'BKN_GEOFENCE_CENSUS_TRACT',
+  "census-tract": {
+    url: "mapbox://shfishburn.bkn-geofence-census-tract",
+    sourceLayer: "BKN_GEOFENCE_CENSUS_TRACT",
     zoom: 5,
-    label: 'Census Tract',
+    label: "Census Tract"
   },
-  'census-block-group': {
-    url: 'mapbox://shfishburn.62up6gjq',
-    sourceLayer: 'BKN_GEOFENCE_BLOCK_GROUP_V2-5hzeh7',
+  "census-block-group": {
+    url: "mapbox://shfishburn.62up6gjq",
+    sourceLayer: "BKN_GEOFENCE_BLOCK_GROUP_V2-5hzeh7",
     zoom: 6,
-    label: 'Census Block Group',
-  },
+    label: "Census Block Group"
+  }
 };
 
 let activeLayer;
 
 // Cache select element.
-const selectElm = document.querySelector('.select-css');
+const selectElm = document.querySelector(".select-css");
 
 // Cache #main element.
-const mainElm = document.querySelector('#main');
+const mainElm = document.querySelector("#main");
 
 // Cache menu buttons.
-const openMenuBtnElm = document.querySelector('.btn-open-menu');
-const closeMenuBtnElm = document.querySelector('.btn-close-menu');
+const openMenuBtnElm = document.querySelector(".btn-open-menu");
+const closeMenuBtnElm = document.querySelector(".btn-close-menu");
 
-openMenuBtnElm.addEventListener('click', () => mainElm.classList.add('active'));
-closeMenuBtnElm.addEventListener('click', () => mainElm.classList.remove('active'));
+openMenuBtnElm.addEventListener("click", () => mainElm.classList.add("active"));
+closeMenuBtnElm.addEventListener("click", () =>
+  mainElm.classList.remove("active")
+);
 
 /**
  * Don't forget to use your own Mapbox key, this one it's not going to work.
  */
-mapboxgl.accessToken = 'pk.eyJ1Ijoic2hmaXNoYnVybiIsImEiOiJjazJsd201ZDMwYXZlM2RwMDRpeHFvOXB6In0.2XBQLAbYp4pu3Gs7DbD1jg';
+mapboxgl.accessToken =
+  "pk.eyJ1Ijoic2hmaXNoYnVybiIsImEiOiJjazJsd201ZDMwYXZlM2RwMDRpeHFvOXB6In0.2XBQLAbYp4pu3Gs7DbD1jg";
 
 // Initialize Mapbox instance.
 const map = new mapboxgl.Map({
-  container: 'map',
+  container: "map",
   zoom: 4,
-  center: [-98.579394, 39.828610],
-  style: 'mapbox://styles/shfishburn/cjnm64jjh0eb22rpi2oul427g'
+  center: [-98.579394, 39.82861],
+  style: "mapbox://styles/shfishburn/cjnm64jjh0eb22rpi2oul427g"
 });
 
 // Create a popup, but don't add it to the map yet.
@@ -83,85 +86,85 @@ const popup = new mapboxgl.Popup({
   closeOnClick: false
 });
 
-map.on('load', () => {
+map.on("load", () => {
   // Add sources
   for (layer in mapLayers) {
-    const {url} = mapLayers[layer];
-    map.addSource(layer, {type: 'vector', url});
+    const { url } = mapLayers[layer];
+    map.addSource(layer, { type: "vector", url });
   }
 
   // Load default layer.
   loadLayer(selectElm.value);
 
   // Track changes on select to load other layers.
-  selectElm.addEventListener('change', function() {
+  selectElm.addEventListener("change", function() {
     loadLayer(this.value);
   });
 });
 
 const clearMapInfo = () => {
   this.popup.remove();
-  this.map.getCanvas().style.cursor = '';
+  this.map.getCanvas().style.cursor = "";
 };
 
-const loadLayer = (layerName) => {
+const loadLayer = layerName => {
   // Extract properties from `mapLayers`.
-  const {url, zoom, sourceLayer} = mapLayers[layerName];
+  const { url, zoom, sourceLayer } = mapLayers[layerName];
 
   // Remove active layer if enabled.
   if (activeLayer) map.removeLayer(activeLayer);
 
   // Set map zoom.
-  map.flyTo({zoom});
+  map.flyTo({ zoom });
   map.setMinZoom(zoom);
 
   // Add map layer.
   map.addLayer({
     id: layerName,
-    type: 'fill',
+    type: "fill",
     source: layerName,
-    'source-layer': sourceLayer,
+    "source-layer": sourceLayer,
     paint: {
-      'fill-outline-color': 'rgba(30,14,98,0.5)',
-      'fill-color': 'rgba(128,7,212,0.02)',
-    },
+      "fill-outline-color": "rgba(30,14,98,0.5)",
+      "fill-color": "rgba(128,7,212,0.02)"
+    }
   });
 
   map.addLayer({
     id: `${layerName}-highlighted`,
-    type: 'fill',
+    type: "fill",
     source: layerName,
-    'source-layer': sourceLayer,
+    "source-layer": sourceLayer,
     paint: {
-      'fill-outline-color': 'rgba(30,14,98,0.5)',
-      'fill-color': 'rgba(128,7,212,0.5)',
+      "fill-outline-color": "rgba(30,14,98,0.5)",
+      "fill-color": "rgba(128,7,212,0.5)"
     },
-    'filter': ['in', 'name', '']
+    filter: ["in", "name", ""]
   });
 
   addPopupMouseEvents(layerName);
 
   // Set active layer to current.
   activeLayer = layerName;
-}
+};
 
-const addPopupMouseEvents = (layerName) => {
-  map.on('mouseenter', layerName, function(e) {
+const addPopupMouseEvents = layerName => {
+  map.on("mouseenter", layerName, function(e) {
     // Change the cursor style as a UI indicator.
-    map.getCanvas().style.cursor = 'pointer';
+    map.getCanvas().style.cursor = "pointer";
   });
 
-  map.on('click', layerName, function(e) {
+  map.on("click", layerName, function(e) {
     const currentLayer = activeLayer;
-
+    scrollToFeatureDetail();
     const features = map
       .queryRenderedFeatures(e.point)
-      .filter((f) => f.layer.id === currentLayer);
+      .filter(f => f.layer.id === currentLayer);
 
     const feature = features[0];
+    // console.log(feature);
 
-    console.log(feature);
-
+    openNav();
     if (!feature || !features.length) {
       this.clearMapInfo();
       return;
@@ -178,42 +181,67 @@ const addPopupMouseEvents = (layerName) => {
       coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
     }
 
-    const filter = features.reduce((memo, feature) => {
-      memo.push(feature.properties.name);
-      return memo;
-    }, ['in', 'name']);
+    const filter = features.reduce(
+      (memo, feature) => {
+        memo.push(feature.properties.name);
+        return memo;
+      },
+      ["in", "name"]
+    );
 
     map.setFilter(`${layerName}-highlighted`, filter);
 
     // Populate the popup and set its coordinates
     // based on the feature found.
-    popup.setLngLat(e.lngLat)
+    popup
+      .setLngLat(e.lngLat)
       .setHTML(popupTemplate(title, properties))
       .addTo(map);
   });
 
-  map.on('mouseleave', layerName, function() {
-    map.getCanvas().style.cursor = '';
+  map.on("mouseleave", layerName, function() {
+    // scrollToProductDescription();
+    map.getCanvas().style.cursor = "";
     popup.remove();
-    map.setFilter(`${layerName}-highlighted`, ['in', 'name', '']);
+    map.setFilter(`${layerName}-highlighted`, ["in", "name", ""]);
   });
-}
+};
 
 const popupTemplate = (title, properties) => `
   <div class="mapbox-popup">
     <h6><strong>${title}</strong></h6>
 
     ${Object.keys(properties)
-      .map((key) => propertyTemplate(key, properties[key]))
+      .map(key => propertyTemplate(key, properties[key]))
       .join()
-      .replace(/<\/div>,*/g, '</div>')}
+      .replace(/<\/div>,*/g, "</div>")}
   </div>
 `;
 
+const closeNav = () => {
+  document.getElementById("main").style.width = "0px";
+};
 
+const openNav = () => {
+  document.getElementById("main").style.width = "340px";
+};
+
+const scrollToFeatureDetail = () => {
+  console.log("scrollToFeatureDetail");
+  document.getElementById("content").scrollBy(340, 0);
+};
+
+const scrollToProductDescription = () => {
+  console.log("scrollToProductDescription");
+  document.getElementById("content").scrollBy(-340, 0);
+};
 const propertyTemplate = (name, value) => {
-  const normalizedName = name.replace(/_/g, ' ');
-  const normalizedValue = String(value).replace(/"/g, '').replace(/\[/g, '').replace(/\]/g, '').replace(/\,/g, ', ');
+  const normalizedName = name.replace(/_/g, " ");
+  const normalizedValue = String(value)
+    .replace(/"/g, "")
+    .replace(/\[/g, "")
+    .replace(/\]/g, "")
+    .replace(/\,/g, ", ");
 
   return value
     ? `
@@ -221,5 +249,5 @@ const propertyTemplate = (name, value) => {
       <strong>${normalizedName}:</strong>
       <span>${normalizedValue}</span>
     </div>`
-    : '';
-}
+    : "";
+};
