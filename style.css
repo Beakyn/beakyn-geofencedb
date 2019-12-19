@@ -274,7 +274,6 @@ table td:first-child {
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 20px;
   scroll-behavior: smooth;
   overflow-y: auto;
 }
@@ -502,9 +501,9 @@ a.close-btn svg {
 #sidebar-overflow {
   display: flex;
   width: 640px;
-  overflow-y: hidden;
   min-height: 100%;
   padding-bottom: 20px;
+  margin: 0px 20px 0px;
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
@@ -516,7 +515,7 @@ a.close-btn svg {
 #sidebar-header {
   position: sticky;
   top: 0;
-  left: -16px;
-  padding-bottom: 10px;
+  left: 0px;
+  padding: 20px 20px 20px;
   background-color: #fafafa;
 }

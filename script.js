@@ -77,7 +77,11 @@ const map = new mapboxgl.Map({
   container: "map",
   zoom: 4,
   center: [-98.579394, 39.82861],
-  style: "mapbox://styles/shfishburn/cjnm64jjh0eb22rpi2oul427g"
+  style: "mapbox://styles/shfishburn/cjnm64jjh0eb22rpi2oul427g",
+  maxBounds: [
+    [-129.96, 23.01],
+    [-55.01, 52.69]
+  ]
 });
 
 // Create a popup, but don't add it to the map yet.
@@ -227,12 +231,10 @@ const openNav = () => {
 };
 
 const scrollToFeatureDetail = () => {
-  console.log("scrollToFeatureDetail");
   document.getElementById("content").scrollBy(340, 0);
 };
 
 const scrollToProductDescription = () => {
-  console.log("scrollToProductDescription");
   document.getElementById("content").scrollBy(-340, 0);
 };
 const propertyTemplate = (name, value) => {
